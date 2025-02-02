@@ -24,8 +24,7 @@ interface PageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-function EditTask(props: PageProps) {
-  const { params, searchParams } = props;
+function EditTask({ params, searchParams }: PageProps) {
   const router = useRouter();
   const { user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,7 +74,7 @@ function EditTask(props: PageProps) {
     };
 
     fetchTask();
-  }, [params]);
+  }, [params.id]);
   
   useEffect(() => {
     if (user) {
