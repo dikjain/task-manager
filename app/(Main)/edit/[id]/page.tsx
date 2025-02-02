@@ -19,14 +19,7 @@ interface TaskData {
   priority: string;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-const EditTask = async ({ params, searchParams }: PageProps) => {
+const EditTask = ({ params }: { params: { id: string } }) => {
   const router = useRouter()
   const { user } = useUser()
   const [isSubmitting, setIsSubmitting] = useState(false)
