@@ -31,7 +31,7 @@ interface Task {
 const Dashboard = () => {
   const { tasks } = useUserStore()
 
-  const totalTasks = tasks.length
+  const totalTasks = tasks.length 
   const completedTasks = tasks.filter((task: Task) => task.status === 'completed').length
   const urgentTasks = tasks.filter((task: Task) => task.priority === 'high').length
   const inProgressTasks = tasks.filter((task: Task) => task.status === 'in_progress').length
