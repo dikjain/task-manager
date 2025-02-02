@@ -26,7 +26,6 @@ const TaskPage = () => {
   const { tasks } = useUserStore()
   const [task, setTask] = useState<Task | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [isEditing, setIsEditing] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {

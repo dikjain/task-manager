@@ -19,7 +19,6 @@ interface Task {
 }
 
 const TasksPage = () => {
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')

@@ -23,20 +23,7 @@ interface Task {
   priority: 'low' | 'medium' | 'high'
 }
 
-interface Project {
-  id: number
-  name: string
-  description: string
-  userId: number
-  createdAt: Date
-}
 
-interface Category {
-  id: number
-  name: string
-  description: string
-  createdAt: Date
-}
 
 const Dashboard = () => {
   const { tasks } = useUserStore()
