@@ -8,23 +8,7 @@ import { sampleProjects, sampleCategories } from '../../../../Configs/data'
 import axios from 'axios'
 import { useUserStore } from '../../../../Stores/user-store'
 
-interface TaskData {
-  title: string;
-  description: string;
-  status: string;
-  projectId: number | null;
-  categoryId: number | null;
-  userId: number;
-  dueDate: string | null;
-  priority: string;
-}
-
-interface PageProps {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-function EditTask({ params, searchParams }: PageProps) {
+function EditTask({ params, searchParams }) {
   const router = useRouter();
   const { user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +19,7 @@ function EditTask({ params, searchParams }: PageProps) {
   const dummyCategories = sampleCategories
   const dummyProjects = sampleProjects
 
-  const [taskData, setTaskData] = useState<TaskData>({
+  const [taskData, setTaskData] = useState({
     title: '',
     description: '',
     status: 'pending',
@@ -99,7 +83,7 @@ function EditTask({ params, searchParams }: PageProps) {
   today.setMinutes(today.getMinutes() - today.getTimezoneOffset())
   const minDate = today.toISOString().slice(0,16)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     setIsSubmitting(true)
     e.preventDefault()
     setError('')
