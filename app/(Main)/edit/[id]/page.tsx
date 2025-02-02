@@ -26,7 +26,7 @@ interface PageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-const EditTask = async ({ params, searchParams }: PageProps) => {
+const EditTask = ({ params, searchParams }: PageProps) => {
   const router = useRouter()
   const { user } = useUser()
   const [isSubmitting, setIsSubmitting] = useState(false)
