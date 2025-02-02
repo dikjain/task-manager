@@ -20,13 +20,12 @@ interface TaskData {
 }
 
 interface PageProps {
-  params: Promise<{
-    id: string;
-  }>;
+  params: { id: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-function EditTask({ params, searchParams }: PageProps) {
+function EditTask(props: PageProps) {
+  const { params, searchParams } = props;
   const router = useRouter();
   const { user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,10 +50,9 @@ function EditTask({ params, searchParams }: PageProps) {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const resolvedParams = await params;
         const response = await axios.get(`/api/task`, {
           params: {
-            id: resolvedParams.id,
+            id: params.id,
           },
         });
         const task = response.data;
@@ -113,7 +111,6 @@ function EditTask({ params, searchParams }: PageProps) {
       return
     }
     try {
-      const resolvedParams = await params;
       const parsedData = {
         title: taskData.title.trim(),
         description: taskData.description.trim(),
@@ -125,7 +122,7 @@ function EditTask({ params, searchParams }: PageProps) {
         priority: taskData.priority
       }
 
-      const response = await axios.put(`/api/edit?id=${resolvedParams.id}`, parsedData)
+      const response = await axios.put(`/api/edit?id=${params.id}`, parsedData)
 
       if (response.status === 200) {
         router.push('/tasks')
