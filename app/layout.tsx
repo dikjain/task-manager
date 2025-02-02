@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SideBar from "./components/SideBar";
 import { ClerkProvider } from "@clerk/nextjs";
 export const metadata: Metadata = {
   title: "TaskMaster",
