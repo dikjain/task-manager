@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { Loader2, Search } from 'lucide-react'
 import { format } from 'date-fns'
