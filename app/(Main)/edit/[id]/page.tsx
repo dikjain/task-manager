@@ -20,9 +20,9 @@ interface TaskData {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
@@ -51,9 +51,10 @@ function EditTask({ params, searchParams }: PageProps) {
   useEffect(() => {
     const fetchTask = async () => {
       try {
+        const resolvedParams = await params;
         const response = await axios.get(`/api/task`, {
           params: {
-            id: params.id,
+            id: resolvedParams.id,
           },
         });
         const task = response.data;
@@ -112,6 +113,7 @@ function EditTask({ params, searchParams }: PageProps) {
       return
     }
     try {
+      const resolvedParams = await params;
       const parsedData = {
         title: taskData.title.trim(),
         description: taskData.description.trim(),
@@ -123,7 +125,7 @@ function EditTask({ params, searchParams }: PageProps) {
         priority: taskData.priority
       }
 
-      const response = await axios.put(`/api/edit?id=${params.id}`, parsedData)
+      const response = await axios.put(`/api/edit?id=${resolvedParams.id}`, parsedData)
 
       if (response.status === 200) {
         router.push('/tasks')
