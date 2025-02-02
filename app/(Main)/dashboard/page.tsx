@@ -2,13 +2,18 @@
 
 import Link from 'next/link'
 import { useUserStore } from '../../../Stores/user-store'
-import Calendar from '../../components/Calendar'
+import dynamic from 'next/dynamic'
 import {
   ChartBarIcon,
   ClockIcon,
   CheckCircleIcon,
   ExclamationCircleIcon
 } from '@heroicons/react/24/outline'
+
+// Dynamically import Calendar with ssr disabled to prevent window not defined error
+const Calendar = dynamic(() => import('../../components/Calendar'), {
+  ssr: false
+})
 
 interface Task {
   id: number
@@ -23,11 +28,8 @@ interface Task {
   priority: 'low' | 'medium' | 'high'
 }
 
-
-
 const Dashboard = () => {
   const { tasks } = useUserStore()
-  console.log(tasks)
 
   const totalTasks = tasks.length
   const completedTasks = tasks.filter((task: Task) => task.status === 'completed').length
