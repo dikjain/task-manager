@@ -80,7 +80,6 @@ export async function PATCH(request) {
       );
     }
 
-    // Update the task status
     await db
       .update(tasks)
       .set({ status })

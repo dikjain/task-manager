@@ -20,19 +20,19 @@ interface TaskData {
 }
 
 interface PageProps {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 function EditTask({ params, searchParams }: PageProps) {
-  const router = useRouter()
-  const { user } = useUser()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
-  const { setUserId, userId } = useUserStore()
-  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter();
+  const { user } = useUser();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const { setUserId, userId } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   const dummyCategories = sampleCategories
   const dummyProjects = sampleProjects
@@ -51,13 +51,12 @@ function EditTask({ params, searchParams }: PageProps) {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const resolvedParams = await params
         const response = await axios.get(`/api/task`, {
           params: {
-            id: resolvedParams.id
-          }
-        })
-        const task = response.data
+            id: params.id,
+          },
+        });
+        const task = response.data;
         setTaskData({
           title: task.title,
           description: task.description,
@@ -66,18 +65,18 @@ function EditTask({ params, searchParams }: PageProps) {
           categoryId: task.categoryId,
           userId: task.userId,
           dueDate: task.dueDate ? new Date(task.dueDate).toISOString().slice(0, 16) : null,
-          priority: task.priority
-        })
+          priority: task.priority,
+        });
       } catch (error) {
-        console.error('Error fetching task:', error)
-        setError('Failed to load task')
+        console.error('Error fetching task:', error);
+        setError('Failed to load task');
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchTask()
-  }, [params])
+    fetchTask();
+  }, [params]);
   
   useEffect(() => {
     if (user) {
@@ -113,7 +112,6 @@ function EditTask({ params, searchParams }: PageProps) {
       return
     }
     try {
-      const resolvedParams = await params
       const parsedData = {
         title: taskData.title.trim(),
         description: taskData.description.trim(),
@@ -125,7 +123,7 @@ function EditTask({ params, searchParams }: PageProps) {
         priority: taskData.priority
       }
 
-      const response = await axios.put(`/api/edit?id=${resolvedParams.id}`, parsedData)
+      const response = await axios.put(`/api/edit?id=${params.id}`, parsedData)
 
       if (response.status === 200) {
         router.push('/tasks')
